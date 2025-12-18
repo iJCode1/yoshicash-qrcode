@@ -7,7 +7,14 @@ import Button from "./components/Button";
 function App() {
   const [tick, setTick] = useState("");
   const setTickValue = (e) => {
-    setTick(e.target.value)
+    const val = e.target.value;
+
+    if(val.length > 0){
+      const firstLetter = val.charAt(0).toLowerCase()+val.slice(1);
+      setTick(firstLetter);
+    }else{
+      setTick("");
+    }
   }
 
   const downloadCode = () => {
