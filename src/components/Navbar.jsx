@@ -13,6 +13,8 @@ const Nav = styled.nav`
   figure{
     margin: 0;
     box-sizing: border-box;
+    max-inline-size: 75rem;
+    margin: 0 auto;
 
     img{
       display: block;
