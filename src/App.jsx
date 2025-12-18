@@ -10,6 +10,20 @@ function App() {
     setTick(e.target.value)
   }
 
+  const downloadCode = () => {
+    const canvas = document.getElementById("qr-canvas");
+    if (canvas) {
+      const pngUrl = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pngUrl;
+      downloadLink.download = `qr-${tick || 'generico'}.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    } else {
+      console.error("No se encontró el elemento canvas.");
+    }
+  }
   
   return (
     <>
@@ -21,7 +35,7 @@ function App() {
           <input name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
         </div>
         <Qr tick={tick}></Qr>
-        <Button Text={"Descargar"}></Button>
+        <Button Accion={downloadCode} Text={"Descargar"}></Button>
       </Container>
     </>
   )

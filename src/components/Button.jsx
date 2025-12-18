@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const ButtonElement = styled.button`
+const StyledButton = styled.button`
   background-color: #d7015a;
   color: white;
   border-radius: 1rem;
@@ -19,10 +19,10 @@ const ButtonElement = styled.button`
     transform: scale(.9);
   }
 `
-const Button = ({Text}) => {
+const Button = ({Text, Accion}) => {
 
   return (
-    <ButtonElement>{Text}</ButtonElement>
+    <StyledButton onClick={Accion}>{Text}</StyledButton>
   )
 }
 

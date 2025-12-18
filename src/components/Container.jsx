@@ -20,7 +20,7 @@ const Cont = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    inline-size: 80%;
+    inline-size: 90%;
     max-inline-size: 37.5rem;
 
       label{
