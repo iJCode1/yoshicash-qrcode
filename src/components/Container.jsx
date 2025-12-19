@@ -47,6 +47,25 @@ const Cont = styled.div`
       }
   }
 
+  section{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    inline-size: 90%;
+    max-inline-size: 37.5rem;
+    padding: 0 .75rem;
+
+    label{
+      font-weight: 600;
+    }
+
+    span{
+      font-size: 1rem;
+      color: #d7015a;
+      ;
+    }
+  }
+
 `
 
 const Container = ({children}) => {
