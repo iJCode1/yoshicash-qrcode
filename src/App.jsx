@@ -3,17 +3,22 @@ import Qr from "./components/Qr"
 import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Button from "./components/Button";
+import Vector from "./components/Vector";
+import WaitingTextVector from './assets/waiting-text-vector.svg'
 
 function App() {
   const [tick, setTick] = useState("");
+  const [disabledButton, setDisabledButton] = useState(true)
   const setTickValue = (e) => {
-    const val = e.target.value;
+    const val = e.target.value.trim();
 
     if(val.length > 0){
       const firstLetter = val.charAt(0).toLowerCase()+val.slice(1);
       setTick(firstLetter);
+      setDisabledButton(false);
     }else{
       setTick("");
+      setDisabledButton(true);
     }
   }
 
@@ -41,8 +46,13 @@ function App() {
           <label htmlFor="tick">Ingresa el código <span>*</span></label>
           <input name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
         </div>
-        <Qr tick={tick}></Qr>
-        <Button Accion={downloadCode} Text={"Descargar"}></Button>
+        {
+          tick 
+          ? <Qr tick={tick}></Qr>
+          : <Vector img={WaitingTextVector}></Vector>
+        }
+        
+        <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton}></Button>
       </Container>
     </>
   )
