@@ -9,6 +9,7 @@ const Cont = styled.div`
   gap: 2rem;
   flex-direction: column;
   padding-inline: 1.5rem;
+  margin-block-end: 2rem;
   h2{
     text-align: center;
     font-size: 3rem;
