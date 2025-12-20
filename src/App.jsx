@@ -5,8 +5,8 @@ import Button from "./components/Button";
 import Vector from "./components/Vector";
 import WaitingTextVector from './assets/waiting-text-vector.svg';
 import QRCodeTemplate from './assets/qr-code-template.png';
-import Preview from "./components/Preview";
 import ToggleButton from "./components/ToggleButton";
+import PreviewQr from "./components/PreviewQr";
 
 function App() {
   const [tick, setTick] = useState("");
@@ -105,7 +105,7 @@ function App() {
 
       const finalImage = canvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.download = `ticket-${tick}.png`;
+      link.download = `qr-${tick}.png`;
       link.href = finalImage;
       link.click();
   };
@@ -137,11 +137,11 @@ function App() {
           </>
           )}
         {tick ? (
-          <Preview 
-            tick={tick} 
-            venue={venue} 
-            amount={amount} 
+          <PreviewQr 
+            tick={tick}
             format={format} 
+            venue={venue}
+            amount={amount}
           />
         ) : (
           <Vector img={WaitingTextVector} />
