@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
 const Cont = styled.div`
-  max-inline-size: 75rem;
+  max-inline-size: 80rem;
   margin: 0 auto;
-  margin-block-start: 2rem;
+  margin-block-start: 7rem;
   display: flex;
   align-items: center;
   gap: 2rem;
   flex-direction: column;
-  padding-inline: 1.5rem;
+  padding-inline: 1rem;
   margin-block-end: 2rem;
   h2{
     text-align: center;
