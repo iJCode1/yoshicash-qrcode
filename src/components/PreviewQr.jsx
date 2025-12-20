@@ -59,7 +59,8 @@ const StyledPreviewQr = styled.section`
     display: inherit;
     flex-direction: column;
     align-items: center;
-    margin-block-end: 1rem;
+    margin-block-end: .25rem;
+    gap: .25rem;
   }
 
   .qr-title{
@@ -115,7 +116,7 @@ const PreviewQr = forwardRef(({format = false, tick, venue = "Sin ingresar", amo
 
   if (!format) {
     return (
-      <QrWrapper>
+      <QrWrapper ref={previewRef}>
         <Qr tick={tick} />
       </QrWrapper>
     );
