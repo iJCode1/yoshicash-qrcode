@@ -1,29 +1,33 @@
 import styled from "styled-components";
 import logoYoshiCash from '../assets/logo-yoshicash.png';
 import Qr from "./Qr";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 
 const QrWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 20px 0;
   width: 100%;
-`;
+`
+
+const StyledPreviewQrWrapper = styled.div`
+  max-inline-size: 18.75rem!important;
+  margin-block-start: 1.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 1);
+  margin: 0 auto;
+`
 
 const StyledPreviewQr = styled.section`
-  block-size: 34.6875rem;
-  max-inline-size: 18.75rem!important;
   background-color: white;
+  padding-block: 2.5rem!important;
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  margin: 0 auto;
   align-items: center;
-  margin-block-start: 1.5rem;
   text-align: center;
   position: relative;
-  padding-block: 1.75rem!important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 2px solid rgba(255, 255, 255, 1);
+  inline-size: 100%!important;
 
   &::before,
   &::after{
@@ -104,7 +108,11 @@ const StyledPreviewQr = styled.section`
   }
 `
 
-const PreviewQr = ({format = false, tick, venue = "Sin ingresar", amount = 0}) => {
+const PreviewQr = forwardRef(({format = false, tick, venue = "Sin ingresar", amount = 0}, ref) => {
+  const previewRef = useRef(null);
+
+  useImperativeHandle(ref, () => previewRef.current);
+
   if (!format) {
     return (
       <QrWrapper>
@@ -114,8 +122,8 @@ const PreviewQr = ({format = false, tick, venue = "Sin ingresar", amount = 0}) =
   }
 
   return (
-    <>
-      <StyledPreviewQr>
+    <StyledPreviewQrWrapper>
+      <StyledPreviewQr ref={previewRef}>
         <p className="qr-title">ESCANEA PARA <br />REALIZAR TU PAGO</p>
         <section>
           <div className="qr-section">
@@ -129,8 +137,8 @@ const PreviewQr = ({format = false, tick, venue = "Sin ingresar", amount = 0}) =
         </div>
         <img src={logoYoshiCash} alt="Logo de YoshiCash" tittle="Logo de YoshiCash" width={124} height={41} />
       </StyledPreviewQr>
-    </>
+    </StyledPreviewQrWrapper>
   )
-}
+});
 
 export default PreviewQr;
