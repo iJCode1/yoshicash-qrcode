@@ -49,6 +49,7 @@ const Cont = styled.div`
 
   section{
     display: flex;
+    align-items: center;
     justify-content: center;
     gap: 1rem;
     inline-size: 90%;
@@ -57,12 +58,11 @@ const Cont = styled.div`
 
     label{
       font-weight: 600;
-    }
-
-    span{
-      font-size: 1rem;
-      color: #d7015a;
-      ;
+      span{
+        font-size: 1rem;
+        color: #d7015a;
+        ;
+      }
     }
   }
 

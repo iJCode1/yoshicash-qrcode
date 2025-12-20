@@ -1,5 +1,4 @@
 import {useState } from "react"
-import Qr from "./components/Qr"
 import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Button from "./components/Button";
@@ -7,6 +6,7 @@ import Vector from "./components/Vector";
 import WaitingTextVector from './assets/waiting-text-vector.svg';
 import QRCodeTemplate from './assets/qr-code-template.png';
 import Preview from "./components/Preview";
+import ToggleButton from "./components/ToggleButton";
 
 function App() {
   const [tick, setTick] = useState("");
@@ -27,8 +27,8 @@ function App() {
     }
   }
 
-  const setFormatValue = (e) => {
-    setFormat(e.target.checked)
+  const setFormatValue = () => {    
+    setFormat(!format);
   }
 
   const setVenueValue = (e) => {
@@ -121,8 +121,8 @@ function App() {
           <input name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
         </div>
         <section>
-          <label htmlFor="format">¿QR con formato?<span>*</span></label>
-          <input type="checkbox" name="format" checked={format} onChange={setFormatValue}></input>
+          <label htmlFor="format">¿QR con formato? <span>*</span></label>
+          <ToggleButton withFormat={format} setFormatValue={setFormatValue}></ToggleButton>
         </section>
         { format && ( 
           <>
