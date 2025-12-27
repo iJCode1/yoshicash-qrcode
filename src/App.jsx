@@ -4,7 +4,6 @@ import Container from "./components/Container";
 import Button from "./components/Button";
 import Vector from "./components/Vector";
 import WaitingTextVector from './assets/waiting-text-vector.svg';
-import QRCodeTemplate from './assets/qr-code-template.png';
 import ToggleButton from "./components/ToggleButton";
 import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
@@ -42,7 +41,7 @@ function App() {
     setAmount(e.target.value)
   }
   
-  const downloadCode = async () => {    
+  const downloadCode = async () => {
     if(!previewRef.current) return;
 
     if(!format){
@@ -77,9 +76,9 @@ function App() {
     <>
       <Navbar></Navbar>
       <Container>
-        <h2>Genera tú código QR</h2>
+        <h2>Digitaliza tu código QR</h2>
         <div>
-          <label htmlFor="tick">Ingresa el código <span>*</span></label>
+          <label htmlFor="tick">Ingresa el código (tick) <span>*</span></label>
           <input name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
         </div>
         <section>
@@ -89,11 +88,11 @@ function App() {
         { format && ( 
           <>
             <div>
-              <label htmlFor="venue">Ingresa el recinto <span>*</span></label>
+              <label className="label-wrong" htmlFor="venue">Ingresa el recinto <span>*</span></label>
               <input name="venue" placeholder="Navidalia ..." value={venue} onChange={setVenueValue} required></input>
             </div>
             <div>
-              <label htmlFor="amount">Ingresa el monto <span>*</span></label>
+              <label className="label-wrong" htmlFor="amount">Ingresa el monto <span>*</span></label>
               <input type="number" name="amount" placeholder="500" value={amount} onChange={setAmountValue} required></input>
             </div>
           </>

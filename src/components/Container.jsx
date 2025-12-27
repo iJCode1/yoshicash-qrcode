@@ -8,7 +8,7 @@ const Cont = styled.div`
   align-items: center;
   gap: 2rem;
   flex-direction: column;
-  padding-inline: 1rem;
+  padding-inline: 1.5rem;
   margin-block-end: 2rem;
   h2{
     text-align: center;
@@ -21,7 +21,7 @@ const Cont = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    inline-size: 90%;
+    inline-size: 100%;
     max-inline-size: 37.5rem;
 
       label{
@@ -38,12 +38,13 @@ const Cont = styled.div`
 
       input{
         display: block;
-        padding: .75rem;
+        padding: .75rem 0;
         border: 1px solid gray;
         border: none;
         outline: none;
         border-bottom: 1px solid #d7015a;
         inline-size: inherit;
+        box-sizing: border-box;
       }
   }
 
@@ -64,6 +65,10 @@ const Cont = styled.div`
         ;
       }
     }
+  }
+
+  .label-wrong{
+    font-weight: 600;
   }
 
 `

@@ -16,6 +16,7 @@ const StyledPreviewQrWrapper = styled.div`
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 2px solid rgba(255, 255, 255, 1);
   margin: 0 auto;
+  box-sizing: border-box;
 `
 
 const StyledPreviewQr = styled.section`
@@ -103,13 +104,17 @@ const StyledPreviewQr = styled.section`
     margin-block-end: .75rem;
     justify-content: center;
 
+    > p {
+      font-size: 1rem;
+    }
+
     > p > span{
       padding-inline-start: .2rem;
     }
   }
 `
 
-const PreviewQr = forwardRef(({format = false, tick, venue = "Sin ingresar", amount = 0}, ref) => {
+const PreviewQr = forwardRef(({format = false, tick, venue, amount}, ref) => {
   const previewRef = useRef(null);
 
   useImperativeHandle(ref, () => previewRef.current);
@@ -131,10 +136,10 @@ const PreviewQr = forwardRef(({format = false, tick, venue = "Sin ingresar", amo
             <Qr tick={tick} />
           </div>
           <p className="qr-note">*ESTE CÓDIGO QR ES VALIDO UNICAMENTE EN:</p>
-          <p className="qr-venue">{venue}</p>
+          <p className="qr-venue">{venue || '...'}</p>
         </section>
         <div className="qr-amount-wrapper">
-          <p>Qr válido por: <span>${amount}</span> </p>
+          <p>Qr válido por: <span>${amount || 0}</span> </p>
         </div>
         <img src={logoYoshiCash} alt="Logo de YoshiCash" tittle="Logo de YoshiCash" width={124} height={41} />
       </StyledPreviewQr>

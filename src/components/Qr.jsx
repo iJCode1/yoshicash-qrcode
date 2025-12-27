@@ -11,7 +11,7 @@ const Qr = ({tick}) => {
         value={tick || " "}
         id='qr-canvas'
         marginSize={2}
-        size={200}
+        size={207}
       />
     </>
   )
