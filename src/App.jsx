@@ -7,7 +7,8 @@ import WaitingTextVector from './assets/waiting-text-vector.svg';
 import ToggleButton from "./components/ToggleButton";
 import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
-import iconDownload from './assets/icons/icon-download.svg'
+import iconDownload from './assets/icons/icon-download.svg';
+import iconCopy from './assets/icons/icon-copy.svg';
 
 function App() {
   const [tick, setTick] = useState("");
@@ -73,6 +74,34 @@ function App() {
     }
   }
 
+  const copyCode = async () => {
+    if (!previewRef.current) return;
+
+    try{
+      let blob;
+
+      if(!format){
+        const qrCanvas = document.querySelector("#qr-canvas");
+        if(qrCanvas){
+          blob = await new Promise((resolve) => qrCanvas.toBlob(resolve, 'image/png'));
+        }
+      }else{
+        blob = await toPng(previewRef.current, {
+          cacheBust: true,
+          pixelRatio: 3,
+          backgroundColor: '#ffffff',
+        }).then(dataUrl => fetch(dataUrl).then(res => res.blob()));
+      }
+      if(blob){
+        const image = new ClipboardItem({"image/png": blob});
+        await navigator.clipboard.write([image]);
+        alert("Se ha copiado la imagen al portapapeles!")
+      }
+    }catch(e){
+      console.error("Error al copiar el QR", e);
+    }
+  }
+
   return (
     <>
       <Navbar></Navbar>
@@ -110,8 +139,10 @@ function App() {
           <Vector img={WaitingTextVector} />
         )}
         
-        <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton} icon={iconDownload} iconText="Icono de Descarga"></Button>
-        <Button></Button>
+        <section className="actions">
+          <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton} icon={iconDownload} iconText="Icono de Descarga" type="download"></Button>
+          <Button Accion={copyCode} isDisabled={disabledButton} Text="Copiar" icon={iconCopy} iconText="Icono de copiar al portapapeles" type="copy"></Button>
+        </section>
       </Container>
     </>
   )

@@ -71,6 +71,10 @@ const Cont = styled.div`
     font-weight: 600;
   }
 
+  .actions{
+    flex-wrap: wrap;
+  }
+
 `
 
 const Container = ({children}) => {
