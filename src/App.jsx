@@ -7,6 +7,7 @@ import WaitingTextVector from './assets/waiting-text-vector.svg';
 import ToggleButton from "./components/ToggleButton";
 import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
+import iconDownload from './assets/icons/icon-download.svg'
 
 function App() {
   const [tick, setTick] = useState("");
@@ -109,7 +110,8 @@ function App() {
           <Vector img={WaitingTextVector} />
         )}
         
-        <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton}></Button>
+        <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton} icon={iconDownload} iconText="Icono de Descarga"></Button>
+        <Button></Button>
       </Container>
     </>
   )
