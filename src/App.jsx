@@ -9,6 +9,7 @@ import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
 import iconDownload from './assets/icons/icon-download.svg';
 import iconCopy from './assets/icons/icon-copy.svg';
+import { Toaster, toast } from 'sonner';
 
 function App() {
   const [tick, setTick] = useState("");
@@ -46,64 +47,70 @@ function App() {
   const downloadCode = async () => {
     if(!previewRef.current) return;
 
-    if(!format){
-      const qrCanvas = document.querySelector("#qr-canvas");
-      if(qrCanvas){
-        const link = document.createElement('a');
-        link.download = `qr-${tick}.png`;
-        link.href = qrCanvas.toDataURL();
-        link.click();
+    const generateDownload = async () =>{
+      let url;
+
+      if(!format){
+        const qrCanvas = document.querySelector("#qr-canvas");
+        if(!qrCanvas) throw new Error("No se encontro el QR");
+        url = qrCanvas.toDataURL();
+      }else{
+        url = await toPng(previewRef.current, {
+          cacheBust: true,
+          pixelRatio: 3,
+          backgroundColor: "#FFFFFF"
+        });
       }
-      return;
-    }
 
-    try{
-      
-      const dataUrl = await toPng(previewRef.current, {
-        cacheBust: true,
-        pixelRatio: 3,
-        backgroundColor: "#FFFFFF"
-      });
-
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.download = `qr-${tick}.png`;
-      link.href = dataUrl;
+      link.href = url;
       link.click();
-    }catch(err){
-      console.error("Error al generar la imagen: ", err)
+
+      return {name: tick};
     }
+
+    toast.promise(generateDownload(), {
+      loading: "Generando QR de descarga...",
+      success: (data) => {
+        return `QR ${data.name} descargado!`;
+      },
+      error: 'No se pudo descargar el QR',
+      duration: 3000,
+    })
   }
 
   const copyCode = async () => {
     if (!previewRef.current) return;
 
-    try{
+    const promise = async () => {
       let blob;
-
       if(!format){
         const qrCanvas = document.querySelector("#qr-canvas");
         if(qrCanvas){
           blob = await new Promise((resolve) => qrCanvas.toBlob(resolve, 'image/png'));
         }
       }else{
-        blob = await toPng(previewRef.current, {
-          cacheBust: true,
-          pixelRatio: 3,
-          backgroundColor: '#ffffff',
-        }).then(dataUrl => fetch(dataUrl).then(res => res.blob()));
+        const dataUrl = await toPng(previewRef.current, {cacheBust: true, pixelRatio: 3});
+        blob = await (await fetch(dataUrl)).blob();
       }
+
       if(blob){
         const image = new ClipboardItem({"image/png": blob});
         await navigator.clipboard.write([image]);
-        alert("Se ha copiado la imagen al portapapeles!")
+        return {name: tick};
       }
-    }catch(e){
-      console.error("Error al copiar el QR", e);
     }
+    toast.promise(promise, {
+      loading: 'Generando imagen...',
+      success: (data) => `QR ${data.name} copiado al portapapeles!`,
+      error: 'Error al copiar el QR',
+    });
   }
 
   return (
     <>
+      <Toaster position="top-right" richColors closeButton duration={3000} pauseWhenPageIsHidden={false} />
       <Navbar></Navbar>
       <Container>
         <h2>Digitaliza tu código QR</h2>
