@@ -110,6 +110,7 @@ const StyledPreviewQr = styled.section`
 
     > p > span{
       padding-inline-start: .2rem;
+      font-size: 1.2rem;
     }
   }
 `

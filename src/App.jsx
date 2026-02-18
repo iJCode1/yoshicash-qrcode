@@ -37,7 +37,7 @@ function App() {
   }
 
   const setVenueValue = (e) => {
-    setVenue(e.target.value)
+    setVenue(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
   }
 
   const setAmountValue = (e) => {
@@ -130,7 +130,7 @@ function App() {
             </div>
             <div>
               <label className="label-wrong" htmlFor="amount">Ingresa el monto <span>*</span></label>
-              <input type="number" name="amount" placeholder="500" value={amount} onChange={setAmountValue} required></input>
+              <input type="number" name="amount" placeholder="500" value={amount} onChange={setAmountValue} onWheel={(e) => e.target.blur()} required></input>
             </div>
           </>
           )}
