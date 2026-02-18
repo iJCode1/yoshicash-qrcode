@@ -10,6 +10,7 @@ import { toPng } from "html-to-image";
 import iconDownload from './assets/icons/icon-download.svg';
 import iconCopy from './assets/icons/icon-copy.svg';
 import { Toaster, toast } from 'sonner';
+import VENUES from "./venues";
 
 function App() {
   const [tick, setTick] = useState("");
@@ -126,7 +127,23 @@ function App() {
           <>
             <div>
               <label className="label-wrong" htmlFor="venue">Ingresa el recinto <span>*</span></label>
-              <input name="venue" placeholder="Navidalia ..." value={venue} onChange={setVenueValue} required></input>
+              {/* <input name="venue" placeholder="Navidalia ..." value={venue} onChange={setVenueValue} required></input> */}
+              <input
+                id="venue"
+                name="venue"
+                list="venues-list"
+                placeholder="Navidalia ..."
+                value={venue}
+                onChange={setVenueValue}
+                required
+                autoComplete="off"
+              />
+
+              <datalist id="venues-list">
+                {VENUES.map((v) => (
+                  <option key={v.value} value={v.label} />
+                ))}
+              </datalist>
             </div>
             <div>
               <label className="label-wrong" htmlFor="amount">Ingresa el monto <span>*</span></label>
