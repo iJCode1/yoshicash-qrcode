@@ -6,12 +6,12 @@ const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: .5rem;
-  background-color: ${props => props.disabled ? '#313131' : props.type === 'download' ? '#d7015a' : '#7a5df8' } ;
-  color: white;
+  background-color: ${props => props.disabled ? '#313131' : props.type === 'download' ? '#FFFFFF' : '#d7015a' };
+  border: 1px solid ${props => props.disabled ? '#313131' : '#d7015a' };
+  color: ${props => props.disabled ? '#FFFFFF' :props.type === 'download' ? "#d7015a" : "#FFFFFF" };
   border-radius: 1rem;
   font-size: 1rem;
   padding: 1.2rem 4rem;
-  border: none;
   outline: none;
   cursor: ${props => props.disabled ? "not-allowed" : "pointer"};
   transition: transform .2s;

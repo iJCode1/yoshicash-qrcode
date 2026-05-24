@@ -8,9 +8,28 @@ import ToggleButton from "./components/ToggleButton";
 import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
 import iconDownload from './assets/icons/icon-download.svg';
+import iconDownloadWhite from './assets/icons/icon-download-white.svg';
 import iconCopy from './assets/icons/icon-copy.svg';
+import iconQR from './assets/icons/qr-icon.svg'
 import { Toaster, toast } from 'sonner';
 import VENUES from "./venues";
+import styled from "styled-components";
+
+const Header = styled.header`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-block-end: 2rem;
+  margin-block-start: 1rem;
+
+  img{
+    display: block;
+  }
+  h2, p{
+    margin: 0;
+  }
+`;
 
 function App() {
   const [tick, setTick] = useState("");
@@ -114,7 +133,11 @@ function App() {
       <Toaster position="top-right" richColors closeButton duration={3000} pauseWhenPageIsHidden={false} />
       <Navbar></Navbar>
       <Container>
-        <h2>Digitaliza tu código QR</h2>
+        <Header>
+          <img src={iconQR} alt="Icono de QR" width="80"/>
+          <h2>Digitaliza Tu Código QR</h2>
+          <p>Ingresa el código o escanea el QR para digitalizar tu ticket</p>
+        </Header>
         <div>
           <label htmlFor="tick">Ingresa el código (tick) <span>*</span></label>
           <input name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
@@ -164,7 +187,7 @@ function App() {
         )}
         
         <section className="actions">
-          <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton} icon={iconDownload} iconText="Icono de Descarga" type="download"></Button>
+          <Button Accion={downloadCode} Text={"Descargar"} isDisabled={disabledButton} icon={disabledButton ? iconDownloadWhite : iconDownload} iconText="Icono de Descarga" type="download"></Button>
           <Button Accion={copyCode} isDisabled={disabledButton} Text="Copiar" icon={iconCopy} iconText="Icono de copiar al portapapeles" type="copy"></Button>
         </section>
       </Container>

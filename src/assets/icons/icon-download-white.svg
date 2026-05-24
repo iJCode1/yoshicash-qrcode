@@ -1,0 +1,10 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Arrow shaft -->
+  <path d="M64 16V74" stroke="white" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Arrow head -->
+  <path d="M40 52L64 76L88 52" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Bottom line -->
+  <path d="M34 102H94" stroke="white" stroke-width="10" stroke-linecap="round"/>
+</svg>
