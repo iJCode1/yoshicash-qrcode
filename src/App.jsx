@@ -14,6 +14,9 @@ import iconQR from './assets/icons/qr-icon.svg'
 import { Toaster, toast } from 'sonner';
 import VENUES from "./venues";
 import styled from "styled-components";
+import Icon from "./components/Icon";
+import iconLocation from './assets/icons/icon-location.svg';
+import iconMoney from './assets/icons/icon-money.svg';
 
 const Header = styled.header`
   display: flex;
@@ -140,7 +143,7 @@ function App() {
         </Header>
         <div>
           <label htmlFor="tick">Ingresa el código (tick) <span>*</span></label>
-          <input name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
+          <input className="input-tick" id="tick" name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
         </div>
         <section>
           <label htmlFor="format">¿QR con formato? <span>*</span></label>
@@ -151,16 +154,21 @@ function App() {
             <div>
               <label className="label-wrong" htmlFor="venue">Ingresa el recinto <span>*</span></label>
               {/* <input name="venue" placeholder="Navidalia ..." value={venue} onChange={setVenueValue} required></input> */}
-              <input
-                id="venue"
-                name="venue"
-                list="venues-list"
-                placeholder="Navidalia ..."
-                value={venue}
-                onChange={setVenueValue}
-                required
-                autoComplete="off"
-              />
+              <div className="input-container">
+                <span>
+                  <Icon icon={iconLocation} iconText="Icono de Evento" ancho="22px" alto="22px" />
+                </span>
+                <input
+                  id="venue"
+                  name="venue"
+                  list="venues-list"
+                  placeholder="Navidalia ..."
+                  value={venue}
+                  onChange={setVenueValue}
+                  required
+                  autoComplete="off"
+                />
+              </div>
 
               <datalist id="venues-list">
                 {VENUES.map((v) => (
@@ -170,7 +178,12 @@ function App() {
             </div>
             <div>
               <label className="label-wrong" htmlFor="amount">Ingresa el monto <span>*</span></label>
-              <input type="number" name="amount" placeholder="500" value={amount} onChange={setAmountValue} onWheel={(e) => e.target.blur()} required></input>
+              <div className="input-container">
+                <span>
+                  <Icon icon={iconMoney} iconText="Icono de Cantidad" ancho="24px" alto="24px" />
+                </span>
+                <input id="amount" type="number" name="amount" placeholder="500" value={amount} onChange={setAmountValue} onWheel={(e) => e.target.blur()} required></input>
+              </div>
             </div>
           </>
           )}

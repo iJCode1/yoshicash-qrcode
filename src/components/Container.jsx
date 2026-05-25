@@ -28,6 +28,7 @@ const Cont = styled.div`
         text-align: start;
         display: block;
         inline-size: inherit;
+        margin-block-end: .75rem;
 
         span{
           font-size: 1rem;
@@ -36,15 +37,69 @@ const Cont = styled.div`
         }
       }
 
+      input:-internal-autofill-selected{
+        background-color: white !important;
+      }
+
+      .input-tick{
+        border: 1px solid #a6a6a6;
+        border-radius: .5rem;
+        border: 1px solid #f1f1f1;
+        border-radius: 16px;
+        box-shadow:
+          0 4px 12px rgba(0,0,0,.04),
+          0 1px 3px rgba(0,0,0,.06);
+        transition: all .2s ease;
+
+        &:focus-within{
+          border-color: #d7015a;
+          box-shadow:
+            0 0 0 4px rgba(215,1,90,.08),
+        }
+      }
+
+      .input-container{
+        display: flex;
+        flex-direction: row;
+        border: 1px solid #a6a6a6;
+        border-radius: .5rem;
+        overflow: hidden;
+        border: 1px solid #f1f1f1;
+        border-radius: 16px;
+
+        box-shadow:
+          0 4px 12px rgba(0,0,0,.04),
+          0 1px 3px rgba(0,0,0,.06);
+
+        transition: all .2s ease;
+
+        &:focus-within{
+          border-color: #d7015a;
+          box-shadow:
+            0 0 0 4px rgba(215,1,90,.08),
+        }
+   
+        
+        span{
+          background-color: #f8d8e3;
+          display: flex;
+          align-items: center;
+          block-size: stretch;
+          inline-size: 3rem;
+          justify-content: center;
+        }
+      }
+
       input{
         display: block;
-        padding: .75rem 0;
+        padding: 1rem;
         border: 1px solid gray;
         border: none;
         outline: none;
-        border-bottom: 1px solid #d7015a;
         inline-size: inherit;
         box-sizing: border-box;
+        background: #fff;
+        /*border: 1px solid #a6a6a6;*/
       }
   }
 
