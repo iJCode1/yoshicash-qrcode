@@ -143,12 +143,24 @@ function App() {
 
   const closeScanner = async () => {
     try {
-      await scannerRef.current?.stop?.();
-      await scannerRef.current?.clear?.();
+      if (scannerRef.current) {
+        await scannerRef.current.stop();
+        await scannerRef.current.clear();
+
+        const video = document.querySelector("#qr-reader video");
+
+        if (video && video.srcObject) {
+          const tracks = video.srcObject.getTracks();
+
+          tracks.forEach((track) => {
+            track.stop();
+          });
+        }
+        scannerRef.current = null;
+      }
     } catch (e) {
-      console.log(e);
+      console.log("Error cerrando cámara:", e);
     } finally {
-      scannerRef.current = null;
       setIsScanning(false);
     }
   };
