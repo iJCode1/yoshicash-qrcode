@@ -1,0 +1,30 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Camera body -->
+  <path d="
+    M34 42
+    H48
+    L54 34
+    H74
+    L80 42
+    H94
+    C100 42 104 46 104 52
+    V84
+    C104 90 100 94 94 94
+    H34
+    C28 94 24 90 24 84
+    V52
+    C24 46 28 42 34 42
+    Z"
+    stroke="#d7015a"
+    stroke-width="6"
+    stroke-linejoin="round"/>
+
+  <!-- Lens -->
+  <circle cx="64" cy="68" r="14"
+          stroke="#d7015a"
+          stroke-width="6"/>
+
+  <!-- Small detail -->
+  <circle cx="88" cy="54" r="3.5"
+          fill="#d7015a"/>
+</svg>

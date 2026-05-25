@@ -42,20 +42,19 @@ const Cont = styled.div`
       }
 
       .input-tick{
-        border: 1px solid #a6a6a6;
-        border-radius: .5rem;
-        border: 1px solid #f1f1f1;
-        border-radius: 16px;
-        box-shadow:
-          0 4px 12px rgba(0,0,0,.04),
-          0 1px 3px rgba(0,0,0,.06);
-        transition: all .2s ease;
+        display: flex;
+        flex: auto;
+        inline-size: auto;
+      }
 
-        &:focus-within{
-          border-color: #d7015a;
-          box-shadow:
-            0 0 0 4px rgba(215,1,90,.08),
-        }
+      .bar-tick{
+        display: block;
+        block-size: auto;
+        background-color: #d7015a;
+        width: auto;
+        border-inline-start: 2px solid #f3bdd0;
+        padding-block: 1rem;
+        box-sizing: border-box;
       }
 
       .input-container{
@@ -78,7 +77,6 @@ const Cont = styled.div`
           box-shadow:
             0 0 0 4px rgba(215,1,90,.08),
         }
-   
         
         span{
           background-color: #f8d8e3;
@@ -90,16 +88,40 @@ const Cont = styled.div`
         }
       }
 
+      .scanner-code{
+        display: flex;
+        flex-direction: row;
+        inline-size: auto;
+        align-items: center;
+        padding-inline-end: 1rem;
+        gap: .25rem;
+        background: none;
+        cursor: pointer;
+        border: none;
+        transition: all .2s;
+
+        &:active{
+          transform: scale(.9);
+        }
+
+        span:nth-child(1){
+          background-color: transparent;
+          width: 100%;
+        }
+
+        p{
+          margin: 0;
+        }
+      }
+
       input{
         display: block;
         padding: 1rem;
-        border: 1px solid gray;
         border: none;
         outline: none;
         inline-size: inherit;
         box-sizing: border-box;
         background: #fff;
-        /*border: 1px solid #a6a6a6;*/
       }
   }
 
@@ -129,7 +151,6 @@ const Cont = styled.div`
   .actions{
     flex-wrap: wrap;
   }
-
 `
 
 const Container = ({children}) => {

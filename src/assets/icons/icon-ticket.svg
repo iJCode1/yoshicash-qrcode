@@ -1,0 +1,32 @@
+<svg width="160" height="128" viewBox="0 0 160 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Ticket body wider -->
+  <path d="
+    M20 36
+    C20 30 24 26 30 26
+    H130
+    C136 26 140 30 140 36
+    V48
+    C132 48 126 54 126 62
+    C126 70 132 76 140 76
+    V92
+    C140 98 136 102 130 102
+    H30
+    C24 102 20 98 20 92
+    V76
+    C28 76 34 70 34 62
+    C34 54 28 48 20 48
+    V36
+    Z"
+    fill="#d7015a"/>
+
+  <!-- Dashed line -->
+  <path d="M80 34V94"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-dasharray="6 6"/>
+
+  <!-- Decorative circles -->
+  <circle cx="56" cy="62" r="6" fill="white"/>
+  <circle cx="104" cy="62" r="6" fill="white"/>
+</svg>

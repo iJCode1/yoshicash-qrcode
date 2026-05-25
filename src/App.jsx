@@ -3,20 +3,22 @@ import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Button from "./components/Button";
 import Vector from "./components/Vector";
-import WaitingTextVector from './assets/waiting-text-vector.svg';
 import ToggleButton from "./components/ToggleButton";
 import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
-import iconDownload from './assets/icons/icon-download.svg';
-import iconDownloadWhite from './assets/icons/icon-download-white.svg';
-import iconCopy from './assets/icons/icon-copy.svg';
-import iconQR from './assets/icons/qr-icon.svg'
 import { Toaster, toast } from 'sonner';
 import VENUES from "./venues";
 import styled from "styled-components";
 import Icon from "./components/Icon";
+import WaitingTextVector from './assets/waiting-text-vector.svg';
+import iconDownload from './assets/icons/icon-download.svg';
+import iconDownloadWhite from './assets/icons/icon-download-white.svg';
+import iconCopy from './assets/icons/icon-copy.svg';
+import iconQR from './assets/icons/qr-icon.svg'
 import iconLocation from './assets/icons/icon-location.svg';
 import iconMoney from './assets/icons/icon-money.svg';
+import iconTicket from './assets/icons/icon-ticket.svg';
+import iconCamera from './assets/icons/icon-camera.svg';
 
 const Header = styled.header`
   display: flex;
@@ -143,7 +145,19 @@ function App() {
         </Header>
         <div>
           <label htmlFor="tick">Ingresa el código (tick) <span>*</span></label>
-          <input className="input-tick" id="tick" name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required></input>
+          <div className="input-container">
+            <span>
+              <Icon icon={iconTicket} iconText="Icono de Ticket" ancho="24px" alto="24px" />
+            </span>
+            <input className="input-tick" id="tick" name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required />
+            <i className="bar-tick"></i>
+            <button className="scanner-code">
+              <span>
+                <Icon icon={iconCamera} iconText="Icono de Camara" ancho="26px" alto="26px" />
+              </span>
+              Escanear
+            </button>
+          </div>
         </div>
         <section>
           <label htmlFor="format">¿QR con formato? <span>*</span></label>
