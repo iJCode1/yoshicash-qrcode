@@ -1,4 +1,4 @@
-import {useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import Navbar from "./components/Navbar";
 import Container from "./components/Container";
 import Button from "./components/Button";
@@ -6,10 +6,12 @@ import Vector from "./components/Vector";
 import ToggleButton from "./components/ToggleButton";
 import PreviewQr from "./components/PreviewQr";
 import { toPng } from "html-to-image";
+import { Html5Qrcode } from "html5-qrcode";
 import { Toaster, toast } from 'sonner';
 import VENUES from "./venues";
 import styled from "styled-components";
 import Icon from "./components/Icon";
+import './styles.css';
 import WaitingTextVector from './assets/waiting-text-vector.svg';
 import iconDownload from './assets/icons/icon-download.svg';
 import iconDownloadWhite from './assets/icons/icon-download-white.svg';
@@ -43,6 +45,8 @@ function App() {
   const [venue, setVenue] = useState("");
   const [amount, setAmount] = useState("");
   const previewRef = useRef(null); 
+  const scannerRef = useRef(null);
+  const [isScanning, setIsScanning] = useState(false);
 
   const setTickValue = (e) => {
     const val = e.target.value.trim();
@@ -133,6 +137,61 @@ function App() {
     });
   }
 
+  const qrScanner = async () => {
+    setIsScanning(true);
+  };
+
+  const closeScanner = async () => {
+    try {
+      await scannerRef.current?.stop?.();
+      await scannerRef.current?.clear?.();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      scannerRef.current = null;
+      setIsScanning(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isScanning) return;
+
+    const startScanner = async () => {
+      try {
+        const scanner = new Html5Qrcode("qr-reader");
+        scannerRef.current = scanner;
+
+        await scanner.start(
+          { facingMode: "environment" },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 250 },
+          },
+          async (decodedText) => {
+            const value = decodedText.trim();
+
+            setTick(value);
+            setDisabledButton(false);
+
+            await closeScanner();
+            toast.success("Código QR escaneado exitosamente");
+          },
+          () => {}
+        );
+      } catch (e) {
+        console.log("Error cámara:", e);
+        await closeScanner();
+        toast.error("No se puede abrir la cámara");
+      }
+    };
+
+    startScanner();
+
+    return () => {
+      scannerRef.current?.stop?.().catch(() => {});
+    };
+  }, [isScanning]);
+
   return (
     <>
       <Toaster position="top-right" richColors closeButton duration={3000} pauseWhenPageIsHidden={false} />
@@ -151,7 +210,7 @@ function App() {
             </span>
             <input className="input-tick" id="tick" name="tick" placeholder="tick-e0127..." value={tick} onChange={setTickValue} required />
             <i className="bar-tick"></i>
-            <button className="scanner-code">
+            <button type="button" onClick={qrScanner} className="scanner-code">
               <span>
                 <Icon icon={iconCamera} iconText="Icono de Camara" ancho="26px" alto="26px" />
               </span>
@@ -218,6 +277,23 @@ function App() {
           <Button Accion={copyCode} isDisabled={disabledButton} Text="Copiar" icon={iconCopy} iconText="Icono de copiar al portapapeles" type="copy"></Button>
         </section>
       </Container>
+      {isScanning && (
+        <div className="scanner-modal">
+          <div className="scanner-box">
+            <button
+              type="button"
+              className="scanner-close"
+              onClick={closeScanner}
+            >
+              ×
+            </button>
+
+            <h3>Escanea tu código QR</h3>
+
+            <div id="qr-reader"></div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

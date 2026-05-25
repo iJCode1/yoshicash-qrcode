@@ -2,3 +2,66 @@ body{
   margin: 0;
   font-family: "Raleway", sans-serif;
 }
+
+.scanner-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.scanner-box {
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  max-width: 760px;
+
+  background: #fff;
+  border-radius: 24px;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+}
+
+.scanner-box h3 {
+  margin: 0 0 1.5rem;
+}
+
+.scanner-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+
+  background: #fff1f6;
+  color: #d7015a;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+#qr-reader {
+  width: min(520px, 100%);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+#qr-reader video {
+  border-radius: 18px;
+}
