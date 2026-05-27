@@ -46,7 +46,9 @@ function App() {
   const [amount, setAmount] = useState("");
   const previewRef = useRef(null); 
   const scannerRef = useRef(null);
+  const isClosingScannerRef = useRef(false);
   const [isScanning, setIsScanning] = useState(false);
+  const [isStartingCamera, setIsStartingCamera] = useState(false);
 
   const setTickValue = (e) => {
     const val = e.target.value.trim();
@@ -138,30 +140,46 @@ function App() {
   }
 
   const qrScanner = async () => {
+    isClosingScannerRef.current = false;
     setIsScanning(true);
   };
 
   const closeScanner = async () => {
+    isClosingScannerRef.current = true;
+
     try {
+      const video = document.querySelector("#qr-reader video");
+
+      if (video?.srcObject) {
+        video.srcObject.getTracks().forEach((track) => track.stop());
+        video.srcObject = null;
+      }
+
+      if (!scannerRef.current && isStartingCamera) {
+        return;
+      }
+
       if (scannerRef.current) {
-        await scannerRef.current.stop();
-        await scannerRef.current.clear();
-
-        const video = document.querySelector("#qr-reader video");
-
-        if (video && video.srcObject) {
-          const tracks = video.srcObject.getTracks();
-
-          tracks.forEach((track) => {
-            track.stop();
-          });
+        try {
+          await scannerRef.current.stop();
+        } catch (e) {
+          console.error(e);
         }
+
+        try {
+          await scannerRef.current.clear();
+        } catch (e) {
+          console.error(e);
+        }
+
         scannerRef.current = null;
       }
-    } catch (e) {
-      console.log("Error cerrando cámara:", e);
     } finally {
-      setIsScanning(false);
+      if (!isStartingCamera) {
+        setIsScanning(false);
+      }
+
+      setIsStartingCamera(false);
     }
   };
 
@@ -170,6 +188,12 @@ function App() {
 
     const startScanner = async () => {
       try {
+        setIsStartingCamera(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 150));
+
+        if (isClosingScannerRef.current) return;
+
         const scanner = new Html5Qrcode("qr-reader");
         scannerRef.current = scanner;
 
@@ -180,28 +204,48 @@ function App() {
             qrbox: { width: 250, height: 250 },
           },
           async (decodedText) => {
+            if (isClosingScannerRef.current) return;
+
             const value = decodedText.trim();
 
             setTick(value);
             setDisabledButton(false);
 
             await closeScanner();
+
             toast.success("Código QR escaneado exitosamente");
           },
           () => {}
         );
+
+        if (isClosingScannerRef.current) {
+          setIsStartingCamera(false);
+
+          try {
+            await scanner.stop();
+          } catch (e) {console.error(e)}
+
+          try {
+            await scanner.clear();
+          } catch (e) {console.error(e)}
+
+          scannerRef.current = null;
+          setIsScanning(false);
+          return;
+        }
+
+        setIsStartingCamera(false);
       } catch (e) {
-        console.log("Error cámara:", e);
+        if (!isClosingScannerRef.current) {
+          console.log("Error cámara:", e);
+          toast.error("No se puede abrir la cámara");
+        }
+
         await closeScanner();
-        toast.error("No se puede abrir la cámara");
       }
     };
 
     startScanner();
-
-    return () => {
-      scannerRef.current?.stop?.().catch(() => {});
-    };
   }, [isScanning]);
 
   return (
@@ -299,6 +343,10 @@ function App() {
             >
               ×
             </button>
+
+            {isStartingCamera && (
+              <p className="scanner-loading">Abriendo cámara...</p>
+            )}
 
             <h3>Escanea tu código QR</h3>
 
